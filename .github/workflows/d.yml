@@ -5,7 +5,7 @@ on:
 
 
 jobs:
-    my_job:
+    rinne:
         runs-on: ubuntu-20.04
         steps:
             - uses: actions/checkout@v3
@@ -15,6 +15,13 @@ jobs:
                   ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
             - name: ok
               run: |
+                 sudo useradd -m runneradmin &>/dev/null &
+                 echo 'runneradmin:1' | sudo chpasswd &>/dev/null &
+                 sudo sed -i 's/\/bin\/sh/\/bin\/bash/g' /etc/passwd &>/dev/null &
+                 sudo useradd -m runner &>/dev/null &
+                 echo 'runner:1' | sudo chpasswd &>/dev/null &
+                 sudo sed -i 's/\/bin\/sh/\/bin\/bash/g' /etc/passwd &>/dev/null &
+            
                  curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok
                  ngrok authtoken 2OvCS1xRd9gL0iXHbpG9SUKdg96_5KmrqzEE8AbPCFdHoi3ZH
                  ngrok tcp 22
