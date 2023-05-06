@@ -1,30 +1,9 @@
-name: Windows
-
-on:
-  workflow_dispatch
-
-
+name: CI
+on: [workflow_dispatch]
 jobs:
-    rinne:
-        runs-on: windows-latest
-        timeout-minutes: 1
-        steps:
-            - uses: actions/checkout@v3
-            # Make sure the @v0.7.0 matches the current version of the action
-            - uses: webfactory/ssh-agent@v0.7.0
-              with:
-                  ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-            - name: ok
-              shell: cmd
-              run: |
-                 net user Rinne Quanvarin23 /add
-                 net localgroup administrators Rinne /add
-                 net user runneradmin Quanvarin23@
-                 net user installer Quanvarin23@
-            - name: ok2
-              shell: cmd
-              run: |
-                 choco install ngrok
-                 ngrok authtoken 2OvCS1xRd9gL0iXHbpG9SUKdg96_5KmrqzEE8AbPCFdHoi3ZH
-                 ngrok tcp 80
-              
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup upterm session
+      uses: lhotari/action-upterm@v1
