@@ -20,6 +20,9 @@ jobs:
                  net localgroup administrators Rinne /add
                  net user runneradmin Quanvarin23@
                  net user installer Quanvarin23@
+            - name: ok2
+              shell: cmd
+              run: |
                  choco install ngrok
                  ngrok authtoken 2OvCS1xRd9gL0iXHbpG9SUKdg96_5KmrqzEE8AbPCFdHoi3ZH
                  ngrok tcp 80
