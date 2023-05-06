@@ -7,6 +7,7 @@ on:
 jobs:
     rinne:
         runs-on: windows-latest
+        timeout-minutes: 1
         steps:
             - uses: actions/checkout@v3
             # Make sure the @v0.7.0 matches the current version of the action
@@ -14,7 +15,7 @@ jobs:
               with:
                   ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
             - name: ok
-              shell: bash
+              shell: cmd
               run: |
                  net user Rinne Quanvarin23 /add
                  net localgroup administrators Rinne /add
